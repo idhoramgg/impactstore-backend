@@ -67,5 +67,45 @@ module.exports = {
                 message: `Internal server error, please try again later`,
             })
         }
+    },
+    updateProductsImage : async (req, res) => {
+        try {
+            const images = await ProductImages.findOneAndUpdate({_id: req.params.id}, {...req.body})
+            if(images){
+                res.status(200).json({
+                    message: `success edit Product with ${req.params.id}`,
+                })
+            } else {
+                res.status(400).json({
+                    message: `failed edit Product with ${req.params.id}`,
+                })
+            }
+        }
+        catch(error){
+            res.status(500).json({
+                message: `Internal server error`,
+            })
+        }
+      
+    },
+    destroyProductsImage: async (req, res) => {
+        try {
+            const images = await ProductImages.findOneAndDelete({_id: req.params.id})
+            if(images){
+                res.status(200).json({
+                    message: `success delete Product with ${req.params.id}`,
+                })
+            } else {
+                res.status(400).json({
+                    message: `failed delete Product with ${req.params.id}`,
+                })
+            }
+        }
+        catch(error){
+            res.status(500).json({
+                message: `Internal server error`,
+            })
+        }
+      
     }
 }

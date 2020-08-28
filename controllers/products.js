@@ -27,7 +27,12 @@ module.exports = {
                         message: `success get one data with ID : ${req.params.id}`,
                         product
                     })
-                 } 
+                 }
+                 else {
+                    res.status(400).json({
+                        message: `failed to get one data with ID : ${req.params.id}`,
+                    })
+                 }
         }
         catch(error){
             console.log(error);
@@ -57,5 +62,45 @@ module.exports = {
                 message: `Internal server error, please try again later`,
             })
         }
+    },
+    updateProducts : async (req, res) => {
+        try {
+            const product = await Products.findOneAndUpdate({_id: req.params.id}, {...req.body})
+            if(product){
+                res.status(200).json({
+                    message: `success edit Product with ${req.params.id}`,
+                })
+            } else {
+                res.status(400).json({
+                    message: `failed edit Product with ${req.params.id}`,
+                })
+            }
+        }
+        catch(error){
+            res.status(500).json({
+                message: `Internal server error`,
+            })
+        }
+      
+    },
+    destroyProducts: async (req, res) => {
+        try {
+            const product = await Products.findOneAndDelete({_id: req.params.id})
+            if(product){
+                res.status(200).json({
+                    message: `success delete Product with ${req.params.id}`,
+                })
+            } else {
+                res.status(400).json({
+                    message: `failed delete Product with ${req.params.id}`,
+                })
+            }
+        }
+        catch(error){
+            res.status(500).json({
+                message: `Internal server error`,
+            })
+        }
+      
     }
 }

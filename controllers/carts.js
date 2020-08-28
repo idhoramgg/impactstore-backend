@@ -34,12 +34,12 @@ module.exports = {
           
             if(cart){
                 res.status(200).json({
-                   message: 'get all carts',
+                   message: `Success to get one cart with id ${req.params.id}`,
                    cart
                   })
                } else {
                    res.status(400).json({
-                       message: 'failed to get all carts'
+                       message: `Failed to get one cart with id ${req.params.id}`
                    })
                }
         } catch(error){
@@ -72,6 +72,46 @@ module.exports = {
             })
         }
         
+    },
+    updateCarts : async (req, res) => {
+        try {
+            const carts = await Carts.findOneAndUpdate({_id: req.params.id}, {...req.body})
+            if(carts){
+                res.status(200).json({
+                    message: `success edit Product with ${req.params.id}`,
+                })
+            } else {
+                res.status(400).json({
+                    message: `failed edit Product with ${req.params.id}`,
+                })
+            }
+        }
+        catch(error){
+            res.status(500).json({
+                message: `Internal server error`,
+            })
+        }
+      
+    },
+    destroyCarts: async (req, res) => {
+        try {
+            const carts = await Carts.findOneAndDelete({_id: req.params.id})
+            if(carts){
+                res.status(200).json({
+                    message: `success delete Product with ${req.params.id}`,
+                })
+            } else {
+                res.status(400).json({
+                    message: `failed delete Product with ${req.params.id}`,
+                })
+            }
+        }
+        catch(error){
+            res.status(500).json({
+                message: `Internal server error`,
+            })
+        }
+      
     }
    
 }

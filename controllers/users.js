@@ -28,6 +28,10 @@ module.exports = {
                         message: `success get one data with ID : ${req.params.id}`,
                         user
                     })
+                 } else {
+                    res.status(400).json({
+                        message: `failed get one data with ID : ${req.params.id}`,
+                    })
                  }
         }
         catch(error){
@@ -102,5 +106,45 @@ module.exports = {
             console.log(error)
         }
     },
+    updateUser : async (req, res) => {
+        try {
+            const user = await Users.findOneAndUpdate({_id: req.params.id}, {...req.body})
+            if(user){
+                res.status(200).json({
+                    message: `success edit User with ${req.params.id}`,
+                })
+            } else {
+                res.status(400).json({
+                    message: `failed edit User with ${req.params.id}`,
+                })
+            }
+        }
+        catch(error){
+            res.status(500).json({
+                message: `Internal server error`,
+            })
+        }
+      
+    },
+    destroyUser: async (req, res) => {
+        try {
+            const user = await Users.findOneAndDelete({_id: req.params.id})
+            if(user){
+                res.status(200).json({
+                    message: `success delete User with ${req.params.id}`,
+                })
+            } else {
+                res.status(400).json({
+                    message: `failed delete User with ${req.params.id}`,
+                })
+            }
+        }
+        catch(error){
+            res.status(500).json({
+                message: `Internal server error`,
+            })
+        }
+      
+    }
 
 }
