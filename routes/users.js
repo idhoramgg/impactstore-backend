@@ -11,7 +11,7 @@ const {
 route.get('/users', getAll);
 route.get('/users/:id', getOne);
 route.post('/users/register', register);
-route.post('/users/login', login);
+route.post('/users/login',login);
 
 module.exports = route
 

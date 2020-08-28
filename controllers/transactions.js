@@ -45,7 +45,9 @@ module.exports = {
             
             const cart = await Carts.findOne({_id: req.body.id_cart})
             let quantity = await cart.quantity
-
+            // update carts
+            const cartUpdateStatus = await Carts.findOneAndUpdate({_id: req.body.id_cart},{status_cart: false})
+           
             let totalPrice = await quantity * price;
 
             const newTransaction = await Transactions.create({
@@ -54,7 +56,8 @@ module.exports = {
             })
             if(newTransaction){
                 res.status(200).json({
-                    newTransaction
+                    newTransaction,
+                    cartUpdateStatus
                 })
             } else {
                 res.status(400).json({
