@@ -3,6 +3,7 @@ const app = express()
 const passport = require('passport')
 require('dotenv').config()
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3000;
 const db = require('./config/db')
@@ -15,7 +16,7 @@ const transactionsRouter = require('./routes/transactions')
 
 // use strategies from our config
 require('./config/strategies').strategies()
-
+app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
